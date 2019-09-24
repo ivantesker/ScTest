@@ -1,0 +1,27 @@
+{
+  "name": "sctest",
+  "version": "1.0.0",
+  "description": "test datasc",
+  "main": "index.js",
+  "scripts": {
+    "run": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ivantesker/ScTest.git"
+  },
+  "author": "Tesker I.A.",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ivantesker/ScTest/issues"
+  },
+  "homepage": "https://github.com/ivantesker/ScTest#readme",
+  "dependencies": {
+    "axios": "^0.19.0",
+    "express": "^4.17.1",
+    "mysql": "^2.17.1",
+    "node-fetch": "^2.6.0",
+    "puppeteer": "^1.20.0",
+    "request": "^2.88.0"
+  }
+}
