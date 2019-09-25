@@ -1,7 +1,7 @@
+const express = require('express');
 var mysql = require('mysql');
-const fetch = require('node-fetch');
-
-let pages_array = [1,2];
+const app = express();
+const port = 8080;
 
 var con = mysql.createConnection({
   host: "sql7.freesqldatabase.com",
@@ -14,8 +14,28 @@ con.connect(function(err) {
   if (err) throw err;    
 });
 
-pages_array.forEach(function(page) {
-    fetch(`https://reqres.in/api/users?page=${page}`)
-    .then(res => res.json())
-    .then(json => console.log(json.data));
+app.get('/', (req, res) => res.sendFile('index.html', { root: __dirname }));
+
+app.get('/reqres', function(req, res) {
+    con.query('SELECT * FROM reqres', function(error, rows, fields) {
+    //how do i get the values of url here
+    res.send(rows);
   });
+ });
+app.get('/affluent', function(req, res) {
+  con.query('SELECT * FROM affluent', function(error, rows, fields) {
+    //how do i get the values of url here
+    res.send(rows);
+  });
+ });
+app.listen(port, () => console.log(`listening on port ${port}`))
+
+function get_sql_data(table){
+  let sentence = `select * from ${table};`
+  con.query(sentence, function (err, result) {
+      if (err) throw err;
+      console.log(result);
+      result = table;
+      return result;
+    });
+}

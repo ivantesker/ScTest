@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<div id="affluent">
+</div>
+
+<div id="reqres">
+</div>
+<table id="affluent" style="border:1">
+</table>
+
+<table id="reqres" style="border:1">
+</table>
+
+<script>
+window.onload = function(){
+  get_data('affluent');
+  get_data('reqres')
+}
+
+function get_data(url){
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+    //   document.getElementById(`${url}`).innerHTML = this.responseText;
+    buildHtmlTable(JSON.parse(this.responseText), `#${url}`);
+    }
+  };
+  xhttp.open("GET", `/${url}`, true);
+  xhttp.send();
+}
+
+function buildHtmlTable(data, selector) {
+  var columns = addAllColumnHeaders(data, selector);
+
+  for (var i = 0; i < data.length; i++) {
+    var row$ = $('<tr/>');
+    for (var colIndex = 0; colIndex < columns.length; colIndex++) {
+      var cellValue = data[i][columns[colIndex]];
+      if (cellValue == null) cellValue = "";
+      row$.append($('<td/>').html(cellValue));
+    }
+    $(selector).append(row$);
+  }
+}
+
+function addAllColumnHeaders(data, selector) {
+  var columnSet = [];
+  var headerTr$ = $('<tr/>');
+
+  for (var i = 0; i < data.length; i++) {
+    var rowHash = data[i];
+    for (var key in rowHash) {
+      if ($.inArray(key, columnSet) == -1) {
+        columnSet.push(key);
+        headerTr$.append($('<th/>').html(key));
+      }
+    }
+  }
+  $(selector).append(headerTr$);
+
+  return columnSet;
+}
+</script>
+
+</body>
+</html>
