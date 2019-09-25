@@ -61,6 +61,7 @@ async function send() {
 
   con.query(sql, [new_array], function(err) {
       if (err) throw err;
+      console.log('Success');
       con.end();
   });
 }
